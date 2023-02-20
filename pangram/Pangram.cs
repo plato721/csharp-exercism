@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,8 +8,6 @@ public static class Pangram
     public static bool IsPangram(string input)
     {
         var foundLetters = input
-            .ToCharArray()
-            .ToList()
             .Aggregate(new HashSet<string>(), (letters, l) =>
             {
                 var lAsLowerString = l.ToString().ToLowerInvariant();
