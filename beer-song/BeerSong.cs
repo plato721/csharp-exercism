@@ -19,7 +19,7 @@ public static class BeerSong
         {
             1 => new SingleBottleHelper(),
             0 => new ZeroBottleHelper(),
-            > 1 => new StandardBottleHelper(numBottles),
+            _ => new StandardBottleHelper(numBottles),
         };
 }
 
@@ -66,9 +66,9 @@ public class StandardBottleHelper : IBottleHelper
 {
     private readonly int _startBottles;
 
-    public int StartBottles() => _startBottles;
-
     public StandardBottleHelper(int startBottles) => _startBottles = startBottles;
+
+    public int StartBottles() => _startBottles;
 
     public string FirstBottlePhrase() => $"{_startBottles} bottles";
 
@@ -79,10 +79,8 @@ public class StandardBottleHelper : IBottleHelper
     public IBottleHelper NextBottleHelper()
     {
         var nextStartBottles = _startBottles - 1;
-        if (nextStartBottles == 1)
-        {
-            return new SingleBottleHelper();
-        }
-        return new StandardBottleHelper(nextStartBottles);
+        return nextStartBottles == 1
+            ? new SingleBottleHelper()
+            : new StandardBottleHelper(nextStartBottles);
     }
 }
