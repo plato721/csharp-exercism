@@ -13,52 +13,46 @@ public static class Sieve
 public class PrimeGenerator
 {
     private readonly int _limit;
-    private readonly List<int> _primes;
     private const int FirstPrime = 2;
 
     public PrimeGenerator(int limit)
     {
-        _limit = limit;
-        if (_limit < 0)
+        if (limit < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(limit),"Limit must be non-negative");
         }
-        _primes = new List<int>();
+
+        _limit = limit;
     }
 
-    public List<int> Generate()
+    public IEnumerable<int> Generate()
     {
-        if (_limit < FirstPrime)
+        if (_limit < 2)
         {
-            return _primes; // Return empty list for limits less than 2
+            return new List<int>();
         }
 
-        var sieve = BuildSieve();
+        var sieve = InitializeSieve();
 
+        MarkPrimes(sieve);
 
-        for (var i = FirstPrime; i <= _limit; i++)
-        {
-            if (sieve[i])
-            {
-                _primes.Add(i);
-            }
-        }
-
-        return _primes;
+        return SieveToPrimes(sieve);
     }
 
-    private bool[] BuildSieve()
+    private bool[] InitializeSieve()
     {
         var sieve = new bool[_limit + 1];
-
-        sieve[0] = false; // 0 is not prime
-        sieve[1] = false; // 1 is not prime
 
         for (var i = FirstPrime; i <= _limit; i++)
         {
             sieve[i] = true; // Assume all numbers are prime initially
         }
 
+        return sieve;
+    }
+
+    private void MarkPrimes(IList<bool> sieve)
+    {
         for (var i = FirstPrime; i * i <= _limit; i++)
         {
             if (sieve[i])
@@ -66,15 +60,28 @@ public class PrimeGenerator
                 RemoveMultiples(sieve, i);
             }
         }
-
-        return sieve;
     }
 
-    private void RemoveMultiples(bool[] sieve, int prime)
+    private void RemoveMultiples(IList<bool> sieve, int prime)
     {
         for (var multiple = prime * prime; multiple <= _limit; multiple += prime)
         {
             sieve[multiple] = false; // Mark multiples of prime as non-prime
         }
+    }
+
+    private IEnumerable<int> SieveToPrimes(IReadOnlyList<bool> sieve)
+    {
+        var primes = new List<int>();
+
+        for (var i = FirstPrime; i <= _limit; i++)
+        {
+            if (sieve[i])
+            {
+                primes.Add(i); // Collect prime numbers
+            }
+        }
+
+        return primes;
     }
 }
