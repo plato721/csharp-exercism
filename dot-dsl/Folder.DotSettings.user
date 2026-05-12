@@ -6,11 +6,7 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58a73236_002D56d4_002D40bf_002Da6cc_002D1f50d3cb238b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Graph_with_one_node" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::B4257550-B04D-9B12-8F7D-424DC572E77E::net10.0::DotDslTests.Graph_with_one_node&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B4257550-B04D-9B12-8F7D-424DC572E77E::net10.0::DotDslTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=df8d3859_002D29cb_002D44f6_002D9947_002D40c34f8515b3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Empty_graph" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::B4257550-B04D-9B12-8F7D-424DC572E77E::net10.0::DotDslTests.Empty_graph&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	</wpf:ResourceDictionary>
