@@ -36,13 +36,7 @@ public class Node : IEquatable<Node>, IEnumerable
 
     public override int GetHashCode()
     {
-        var hashCode = new HashCode();
-        hashCode.Add(Name);
-        hashCode.Add(Attrs.Aggregate(
-            0, (current, attr) => current + attr.GetHashCode())
-        );
-
-        return hashCode.ToHashCode();
+        return HashCode.Combine(Name);
     }
 }
 
@@ -80,48 +74,11 @@ public class Edge : IEnumerable
 
     public override int GetHashCode()
     {
-        var hashCode = new HashCode();
-        hashCode.Add(NodeName1);
-        hashCode.Add(NodeName2);
-        hashCode.Add(Attrs.Aggregate(
-            0, (current, attr) => current + attr.GetHashCode())
-        );
-
-        return hashCode.ToHashCode();
+        return HashCode.Combine(NodeName1, NodeName2);
     }
 }
 
-public class Attr : IEquatable<Attr>
-{
-    public Dictionary<string, string> Values { get; } = [];
-
-    public Attr(string label, string value)
-    {
-        Values.Add(label, value);
-    }
-
-    public bool Equals(Attr? other)
-    {
-        return GetHashCode() == other?.GetHashCode();
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as Attr);
-    }
-
-    public override int GetHashCode()
-    {
-        return Values.OrderBy(x => x.Key)
-            .Aggregate(new HashCode(), (hashCode, pair) =>
-            {
-                hashCode.Add(pair.Key);
-                hashCode.Add(pair.Value);
-                return hashCode;
-            })
-            .ToHashCode();
-    }
-}
+public record Attr(string Key, string Value);
 
 public class Graph : IEnumerable
 {
@@ -147,17 +104,5 @@ public class Graph : IEnumerable
     public IEnumerator GetEnumerator()
     {
         yield break;
-    }
-
-    public bool Equals(Graph? other)
-    {
-        return other != null && Nodes.SequenceEqual(other.Nodes) &&
-               Edges.SequenceEqual(other.Edges) &&
-               Attrs.SequenceEqual(other.Attrs);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as Graph);
     }
 }
